@@ -1,0 +1,13 @@
+{
+  "name": "snaptocode",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Upload a website screenshot and get React + Tailwind code that replicates the design.",
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "dev:backend": "node backend/server.js",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "build:frontend": "npm run build --prefix frontend"
+  },
+  "license": "MIT"
+}
