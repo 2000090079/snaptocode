@@ -34,29 +34,20 @@ export default function App() {
       const formData = new FormData();
       formData.append('image', selectedFile);
 
-      let response;
-      try {
-        response = await fetch('/api/analyze', {
-          method: 'POST',
-          body: formData,
-        });
-      } catch {
-        throw new Error('Cannot reach the backend server. Start it with: cd backend && npm start');
-      }
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        body: formData,
+      });
 
       let data;
       try {
         data = await response.json();
       } catch {
-        throw new Error(
-          response.status === 0 || response.status >= 500
-            ? 'Backend server is not running. Start it with: cd backend && OPENAI_API_KEY=your_key npm start'
-            : `Server returned an unexpected response (HTTP ${response.status}).`
-        );
+        throw new Error(`Server error (HTTP ${response.status}). Check your Render logs.`);
       }
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to analyze screenshot.');
+        throw new Error(data.details || data.error || 'Failed to analyze screenshot.');
       }
 
       setResult(data);
